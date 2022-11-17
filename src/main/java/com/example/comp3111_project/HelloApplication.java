@@ -1,5 +1,6 @@
 package com.example.comp3111_project;
 
+import com.example.comp3111_project.chartScene.ChartScene;
 import com.example.comp3111_project.outputScene.OutputScene;
 import com.example.comp3111_project.teamScene.TeamScene;
 import javafx.application.Application;
@@ -13,7 +14,7 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        OutputScene scene = new OutputScene();
+        ChartScene scene = new ChartScene();
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();

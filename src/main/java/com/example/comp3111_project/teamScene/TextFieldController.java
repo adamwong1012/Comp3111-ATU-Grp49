@@ -27,12 +27,20 @@ public class TextFieldController   {
 
     private String inputResult;
 
+    @FXML
+    private Button exitButton;
+
 
 
     @FXML
     void search(ActionEvent event) {
         inputResult = inputField.getCharacters().toString();
         System.out.println(inputResult);
+    }
+
+    @FXML
+    void exit(ActionEvent event) {
+
     }
 
     public String getInputResult() {
