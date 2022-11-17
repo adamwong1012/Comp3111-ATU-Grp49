@@ -321,6 +321,8 @@ public class HelloApplication extends Application {
         mainLabel.setFont(new Font("Arial", 18));
         mainLabel.setTextFill(Color.RED);
 
+
+
         Button btn1 = new Button();
         btn1.setLayoutX(100);
         btn1.setLayoutY(138);
@@ -353,6 +355,8 @@ public class HelloApplication extends Application {
         selectedFileLabel.setLayoutY(140);
         selectedFileLabel.setFont(new Font("Arial", 15));
 
+
+
         Label Welcome = new Label("Welcome to ATU!");
         Welcome.setLayoutX(40);
         Welcome.setLayoutY(40);
@@ -365,6 +369,12 @@ public class HelloApplication extends Application {
         Input.setFont(new Font("Arial", 15));
         Welcome.setTextFill(Color.ORANGE);
 
+        Label search = new Label("Search:");
+        search.setLayoutX(50);
+        search.setLayoutY(280);
+        search.setFont(new Font("Arial", 15));
+
+
         group1.getChildren().add(Welcome);
         group1.getChildren().add(mainLabel);
         group1.getChildren().add(selectedFileLabel);
@@ -374,6 +384,7 @@ public class HelloApplication extends Application {
         group1.getChildren().add(Input);
         group1.getChildren().add(btn4);
         group1.getChildren().add(btn5);
+        group1.getChildren().add(search);
 
 
         stage_stat.setScene(scene1);
