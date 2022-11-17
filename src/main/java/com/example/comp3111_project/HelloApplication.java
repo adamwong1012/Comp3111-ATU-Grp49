@@ -51,12 +51,18 @@ public class HelloApplication extends Application {
             br.readLine(); // skip the first line
             while ((line = br.readLine()) != null) {
                 tempArr = line.split(delimiter);
+                String temptemp = "";
+                String displayName = "";
+                String displayEmail ="";
                 for(int i=0;i<tempArr.length;i++)
-                {
-                 if(tempArr[i].contains("\"")){tempArr[i].replace("\"","");
-                 }
+                {   temptemp = tempArr[1]+tempArr[2];
+                     displayName = temptemp.substring(1, temptemp.length() - 1);
+//                 if(temptemp.startsWith("\"")){temptemp.replace("\"","");
+//                     System.out.println(temptemp);
+//                 }
+                      displayEmail = tempArr[3].substring(1, temptemp.length() - 1);
                 }
-                person_data.add(new Person(tempArr[0], tempArr[1]+tempArr[2], tempArr[3], tempArr[4], tempArr[5], tempArr[6],
+                person_data.add(new Person(tempArr[0], displayName, displayEmail, tempArr[4], tempArr[5], tempArr[6],
                         tempArr[7], tempArr[8], tempArr[9]));
             }
             br.close();
@@ -198,6 +204,7 @@ public class HelloApplication extends Application {
         person_stage.setScene(scene_person);
         btn2.setOnAction(e ->
                 //stage_stat.setScene(scene_person)
+
                 person_stage.show()
         );
         //group1.getChildren().add(btn2);
