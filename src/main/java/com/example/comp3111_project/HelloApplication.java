@@ -191,8 +191,8 @@ public class HelloApplication extends Application {
 
 
         Button btn2 = new Button();
-        btn2.setLayoutX(100);
-        btn2.setLayoutY(250);
+        btn2.setLayoutX(135);
+        btn2.setLayoutY(200);
         btn2.setText("view student info");
         Stage person_stage = new Stage();
         person_stage.setScene(scene_person);
@@ -203,8 +203,8 @@ public class HelloApplication extends Application {
         //group1.getChildren().add(btn2);
 
         Button btn3 = new Button();
-        btn3.setLayoutX(100);
-        btn3.setLayoutY(300);
+        btn3.setLayoutX(135);
+        btn3.setLayoutY(240);
         btn3.setText("view general statistics");
         Stage stats_Stage = new Stage();
         btn3.setOnAction(e -> {
@@ -313,10 +313,15 @@ public class HelloApplication extends Application {
         selectedFileLabel.setFont(new Font("Arial", 15));
 
         Label Welcome = new Label("Welcome to ATU!");
-
         Welcome.setLayoutX(40);
         Welcome.setLayoutY(40);
         Welcome.setFont(new Font("Arial", 40));
+        Welcome.setTextFill(Color.ORANGE);
+
+        Label Input = new Label("Statistics:");
+        Input.setLayoutX(50);
+        Input.setLayoutY(200);
+        Input.setFont(new Font("Arial", 15));
         Welcome.setTextFill(Color.ORANGE);
 
         group1.getChildren().add(Welcome);
@@ -325,6 +330,7 @@ public class HelloApplication extends Application {
         group1.getChildren().add(btn1);
         group1.getChildren().add(btn2);
         group1.getChildren().add(btn3);
+        group1.getChildren().add(Input);
 
 
         stage_stat.setScene(scene1);
