@@ -1,11 +1,13 @@
 package com.example.comp3111_project.teamScene;
 
+import com.example.comp3111_project.HelloApplication;
 import com.example.comp3111_project.outputScene.OutputController;
 import com.example.comp3111_project.outputScene.OutputScene;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -41,9 +43,23 @@ public class TextFieldController   {
         inputResult = inputField.getCharacters().toString();
         Stage outputStage = new Stage();
         OutputScene outputScene = new OutputScene();
-        outputScene.getController().setSearch(inputResult);
-        outputStage.setScene(outputScene);
-        outputStage.show();
+        int result = outputScene.getController().checkForValidInput(inputResult);
+        if ( result == -1) {
+            Alert alertMessage = new Alert(Alert.AlertType.NONE);
+            alertMessage.setAlertType(Alert.AlertType.ERROR);
+            alertMessage.setTitle("Invalid Input");
+            alertMessage.setContentText("Please provide valid input.");
+            alertMessage.show();
+        } else if (result == 0) {
+            Alert alertMessage = new Alert(Alert.AlertType.NONE);
+            alertMessage.setAlertType(Alert.AlertType.ERROR);
+            alertMessage.setTitle("Invalid Input");
+            alertMessage.setContentText("There is no existing record");
+            alertMessage.show();
+        } else {
+            outputStage.setScene(outputScene);
+            outputStage.show();
+        }
     }
 
     @FXML

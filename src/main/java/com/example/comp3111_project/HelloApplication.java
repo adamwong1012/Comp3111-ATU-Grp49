@@ -6,11 +6,9 @@ import com.example.comp3111_project.chartScene.ChartScene;
 import com.example.comp3111_project.teamScene.TeamScene;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -57,12 +55,18 @@ public class HelloApplication extends Application {
             br.readLine(); // skip the first line
             while ((line = br.readLine()) != null) {
                 tempArr = line.split(delimiter);
+                String temptemp = "";
+                String displayName = "";
+                String displayEmail ="";
                 for(int i=0;i<tempArr.length;i++)
-                {
-                    if(tempArr[i].contains("\"")){tempArr[i].replace("\"","");
-                    }
+                {   temptemp = tempArr[1]+tempArr[2];
+                    displayName = temptemp.substring(1, temptemp.length() - 1);
+//                 if(temptemp.startsWith(""")){temptemp.replace(""","");
+//                     System.out.println(temptemp);
+//                 }
+                    displayEmail = tempArr[3].substring(1, temptemp.length() - 1);
                 }
-                person_data.add(new Person(tempArr[0], tempArr[1]+tempArr[2], tempArr[3], tempArr[4], tempArr[5], tempArr[6],
+                person_data.add(new Person(tempArr[0], displayName, displayEmail, tempArr[4], tempArr[5], tempArr[6],
                         tempArr[7], tempArr[8], tempArr[9]));
             }
             br.close();
@@ -307,7 +311,8 @@ public class HelloApplication extends Application {
                 {
                     try {
                         Stage stage5= new Stage();
-                        stage5.setScene(new ChartScene());
+                        ChartScene chartScene = new ChartScene();
+                        stage5.setScene(chartScene);
                         stage5.show();
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
@@ -368,6 +373,7 @@ public class HelloApplication extends Application {
         Input.setLayoutY(200);
         Input.setFont(new Font("Arial", 15));
         Welcome.setTextFill(Color.ORANGE);
+
 
         Label search = new Label("Search:");
         search.setLayoutX(50);
@@ -455,8 +461,8 @@ public class HelloApplication extends Application {
         private final SimpleStringProperty mypreference;
         private final SimpleStringProperty concerns;
 
-        private Person(String student_id, String student_name, String student_email,String k1_energy, String k2_energy, String k3_trick1,
-                       String k3_trick2, String my_preference, String concerns) {
+        public Person(String student_id, String student_name, String student_email, String k1_energy, String k2_energy, String k3_trick1,
+                      String k3_trick2, String my_preference, String concerns) {
             this.studentid = new SimpleStringProperty(student_id);
             this.studentname = new SimpleStringProperty(student_name);
             this.studentemail = new SimpleStringProperty(student_email);
@@ -544,5 +550,9 @@ public class HelloApplication extends Application {
             concerns.set(val);
         }
 
+    }
+
+    public static ObservableList<Person> getPerson_data() {
+        return person_data;
     }
 }
