@@ -60,9 +60,6 @@ public class HelloApplication extends Application {
                 for(int i=0;i<tempArr.length;i++)
                 {   temptemp = tempArr[1]+tempArr[2];
                      displayName = temptemp.substring(1, temptemp.length() - 1);
-//                 if(temptemp.startsWith("\"")){temptemp.replace("\"","");
-//                     System.out.println(temptemp);
-//                 }
                       displayEmail = tempArr[3].substring(1, temptemp.length() - 1);
                 }
                 person_data.add(new Person(tempArr[0], displayName, displayEmail, tempArr[4], tempArr[5], tempArr[6],
@@ -218,10 +215,14 @@ public class HelloApplication extends Application {
         btn3.setText("view general statistics");
         Stage stats_Stage = new Stage();
         btn3.setOnAction(e -> {
-            Platform.runLater(()->{//HelloApplication.read(selectedFile.toString());
+            Platform.runLater(()->{
                 String numOfStudents = String.valueOf(person_data.size());
-                //String K1_Energy_stats = "("+
-                //int test = Integer.valueOf(String.valueOf(person_data.get(0).k1energy));
+
+                /*
+                 * check for the average K1,
+                 * minimum and maximum values of K1
+                 * using for loop to iterate through the list of students
+                 */
                 double K1_AVG = 0;
                 double K1_MIN = Double.parseDouble(person_data.get(0).k1energy.getValue());
                 double K1_MAX = Double.parseDouble(person_data.get(0).k1energy.getValue());
@@ -237,6 +238,11 @@ public class HelloApplication extends Application {
                     };
                 }
 
+                /*
+                * check for the average K2,
+                * minimum and maximum values of K2
+                * using for loop to iterate through the list of students
+                */
                 double K2_AVG = 0;
                 double K2_MIN = Double.parseDouble(person_data.get(0).k2energy.getValue());
                 double K2_MAX = Double.parseDouble(person_data.get(0).k2energy.getValue());
@@ -254,6 +260,14 @@ public class HelloApplication extends Application {
 
                 K2_AVG = K2_AVG/person_data.size();
 
+                /*
+                 * check for the K3 tick 1 and tick 2
+                 * check the "my preference"
+                 *
+                 * using for loop to iterate through the list of students
+                 * by adding the values for each field, for example, if the result of
+                 * adding all "my preference" is 2, then two students put 1 in their preference
+                 */
 
                 Integer K3_TICK_1 = 0;
                 Integer K3_TICK_2 = 0;
@@ -295,27 +309,12 @@ public class HelloApplication extends Application {
         btn1.setLayoutY(138);
         btn1.setText("Choose a file");
         btn1.setOnAction(e -> {
+            /* using file chooser to allow users to choose files from file explorer*/
             FileChooser fileChooser = new FileChooser();
             selectedFile = fileChooser.showOpenDialog(null);
-
-//            Label file_name = new Label(selectedFile.getName());
-//            file_name.setLayoutX(60);
-//            file_name.setLayoutY(105);
-//            file_name.setFont(new Font("Arial", 10));
-//            group1.getChildren().add(file_name); testing
             btn1.setText(selectedFile.getName());
-
-
-
-//            try {
-//                HelloApplication.read(selectedFile.toString());
-//            } catch (Exception ex) {
-//                throw new RuntimeException(ex);
-//            }
             HelloApplication.read(selectedFile.toString());
-            //System.out.println(selectedFile.toString());
 
-            //stage_stat.setScene(scene_stat);
         });
         Label selectedFileLabel = new Label("File:");
         selectedFileLabel.setLayoutX(50);
@@ -334,6 +333,23 @@ public class HelloApplication extends Application {
         Input.setFont(new Font("Arial", 15));
         Welcome.setTextFill(Color.ORANGE);
 
+        Label SearchLabel = new Label("Search:");
+        SearchLabel.setLayoutX(50);
+        SearchLabel.setLayoutY(280);
+        SearchLabel.setFont(new Font("Arial", 15));
+
+        Button btn4 = new Button();
+        btn4.setLayoutX(135);
+        btn4.setLayoutY(280);
+        btn4.setText("Search your own team");
+
+        Button btn5 = new Button();
+        btn5.setLayoutX(135);
+        btn5.setLayoutY(320);
+        btn5.setText("Search Line Chart");
+
+
+
         group1.getChildren().add(Welcome);
         group1.getChildren().add(mainLabel);
         group1.getChildren().add(selectedFileLabel);
@@ -341,6 +357,10 @@ public class HelloApplication extends Application {
         group1.getChildren().add(btn2);
         group1.getChildren().add(btn3);
         group1.getChildren().add(Input);
+
+        group1.getChildren().add(SearchLabel);
+        group1.getChildren().add(btn4);
+        group1.getChildren().add(btn5);
 
 
         stage_stat.setScene(scene1);
@@ -351,18 +371,6 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) throws Exception {
 
-//        String csvFile;
-//
-//
-//       // String csvFile = selectedFile.toString();                 ; //"C:\\Users\\85292\\Downloads\\Sample Student Data File (1).CSV"; //
-//        try {
-//            csvFile = selectedFile.toString();
-//        } catch (Exception e) {
-//            //throw new RuntimeException(e);
-//            System.out.println("its wrong");
-//        }
-//        HelloApplication.read(csvFile);
-//        //System.out.println("Hello");
         launch(args);
 
     }
@@ -372,7 +380,7 @@ public class HelloApplication extends Application {
         private final SimpleStringProperty entry;
         private final SimpleStringProperty value;
 
-        private Statistics(String fName, String lName) {
+        public Statistics(String fName, String lName) {
             this.entry = new SimpleStringProperty(fName);
             this.value = new SimpleStringProperty(lName);
         }
@@ -408,8 +416,8 @@ public class HelloApplication extends Application {
         private final SimpleStringProperty mypreference;
         private final SimpleStringProperty concerns;
 
-        private Person(String student_id, String student_name, String student_email,String k1_energy, String k2_energy, String k3_trick1,
-                       String k3_trick2, String my_preference, String concerns) {
+        public Person(String student_id, String student_name, String student_email, String k1_energy, String k2_energy, String k3_trick1,
+                      String k3_trick2, String my_preference, String concerns) {
             this.studentid = new SimpleStringProperty(student_id);
             this.studentname = new SimpleStringProperty(student_name);
             this.studentemail = new SimpleStringProperty(student_email);
