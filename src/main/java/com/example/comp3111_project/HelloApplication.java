@@ -1,22 +1,25 @@
 package com.example.comp3111_project;
 
-import java.io.*;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import java.io.*;
 
 public class HelloApplication extends Application {
 
@@ -299,7 +302,7 @@ public class HelloApplication extends Application {
 //            file_name.setLayoutX(60);
 //            file_name.setLayoutY(105);
 //            file_name.setFont(new Font("Arial", 10));
-//            group1.getChildren().add(file_name);
+//            group1.getChildren().add(file_name); testing
             btn1.setText(selectedFile.getName());
 
 
