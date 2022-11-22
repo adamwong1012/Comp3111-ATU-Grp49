@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 
 public class HelloApplication extends Application {
 
-    static File selectedFile;
+    static File selectedFile; //test
 
     Scene primaryScene;
 
