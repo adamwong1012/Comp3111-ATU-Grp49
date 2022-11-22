@@ -1,4 +1,5 @@
 package com.example.comp3111_project.teamScene;
+import com.example.comp3111_project.outputScene.OutputHelper;
 import com.example.comp3111_project.outputScene.OutputScene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -48,7 +49,8 @@ public class TextFieldController   {
         Stage outputStage = new Stage();
         outputStage.setTitle("ATU System");
         OutputScene outputScene = new OutputScene();
-        int result = outputScene.getController().checkForValidInput(inputResult);
+        OutputHelper outputHelper = new OutputHelper();
+        int result = outputHelper.checkForValidInput(inputResult);
         if ( result == -1) {
             Alert alertMessage = new Alert(Alert.AlertType.NONE);
             alertMessage.setAlertType(Alert.AlertType.ERROR);
