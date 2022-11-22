@@ -61,6 +61,7 @@ public class ChartController implements Initializable {
         count = 0;
         for (HelloApplication.Person person : student_data) {
             dataSeries2.getData().add(new XYChart.Data<Number,Number>( count, Double.parseDouble(person.getK2energy())));
+            count++;
         }
         lineChart.getData().add(dataSeries1);
         lineChart.getData().add(dataSeries2);
