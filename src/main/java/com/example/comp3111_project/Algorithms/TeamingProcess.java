@@ -3,13 +3,18 @@
  */
 package com.example.comp3111_project.Algorithms;
 
-import java.lang.Math;   // ########## Should be taken away
+//import java.lang.Math;   // ########## Should be taken away
+import com.example.comp3111_project.HelloApplication;
+import java.io.*;
+import java.util.*;
+import com.opencsv.CSVWriter;
+import com.opencsv.CSVReader;
 
 //@SuppressWarnings("unused")
 public class TeamingProcess {
 
 	private static int team_size = 3;
-	private static int student_no = 125;
+	private static int student_no = 100;
 	private static int team_no;
 	private static int remaining_student_no;
 	public static double k1_mean;
@@ -82,39 +87,89 @@ public class TeamingProcess {
 		}
 	}
 	
-	
-	public static void printE(SortingEntity entity[]) {
-		for (int i = 0; i < entity.length; i++) {
-			if (entity[i] != null) {
-				System.out.print(entity[i].getPerson().getStudentid() + ", ");
-				System.out.print(entity[i].getPerson().getK1energy() + ", ");
-				System.out.print(entity[i].getPerson().getK2energy() + "\n");
-			}
-		}
+	public static void writeToCSVFile(String filePath, Team teams[])
+	{
+	    File file = new File(filePath);
+	    try {
+	        FileWriter outputfile = new FileWriter(file);
+	        CSVWriter writer = new CSVWriter(outputfile, ',',
+                    						 CSVWriter.NO_QUOTE_CHARACTER,
+                    						 CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                    						 CSVWriter.DEFAULT_LINE_END);
+	  
+	        // Add header to csv
+	        String[] header = { "Team Id", "Student_id", "Student_name", "Team-mate 1", "Team-mate 2", 
+	        					"Team-mate 3", "K1_average", "K2_average" };
+	        writer.writeNext(header);
+	        // Add data to csv
+	        for (int k = 0; k < team_no; k++) {
+	        	if (teams[k].getPersonNo() == 3) {
+	        		for (int i = 0; i < 3; i++) {
+	        			String[] rowdata = new String[8];
+	        			rowdata[0] = ""+teams[k].getID();
+	        			rowdata[1] = teams[k].getPersonAt(i).getStudentid();
+	        			rowdata[2] = teams[k].getPersonAt(i).getStudentname();
+	        			for (int j = 3; j < 5; j++) {
+	        				rowdata[j] = teams[k].getPersonAt((i+j-2)%3).getStudentname();
+	        			}
+	        			rowdata[5] = "";
+	        			rowdata[6] = ""+teams[k].getK1();
+	        			rowdata[7] = ""+teams[k].getK2();
+	        	        writer.writeNext(rowdata);
+	        		}
+	        	} else if (teams[k].getPersonNo() == 4) {
+	        		for (int i = 0; i < 4; i++) {
+	        			String[] rowdata = new String[8];
+	        			rowdata[0] = ""+teams[k].getID();
+	        			rowdata[1] = teams[k].getPersonAt(i).getStudentid();
+	        			rowdata[2] = teams[k].getPersonAt(i).getStudentname();
+	        			for (int j = 3; j < 6; j++) {
+	        				rowdata[j] = teams[k].getPersonAt((i+j-2)%4).getStudentname();
+	        			}
+	        			rowdata[6] = ""+teams[k].getK1();
+	        			rowdata[7] = ""+teams[k].getK2();
+	        	        writer.writeNext(rowdata);
+	        		}
+	        	}
+	        }
+	  
+	        writer.close();
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
 	}
+	
 	
 	
 	// NOTES: 1. Array is passed by value in java
 	//		  2. Array is copied by reference in java
 	//        3. Object is copied by reference in java
 	public static void main(String args[]) {
-		/******* The following few lines of code will be replaced */
-		// Create Students
+		// Get Students(i.e. Person) from HelloApplication.java
+		HelloApplication inputTask = new HelloApplication();
+		List<Person> student_list = inputTask.getPerson_data().getItems(); 	// observable list --> list
+		
+		student_no = student_list.size();
+		
+		Person students[] = new Person[student_no];
+        for (int i = 0; i < student_no; i++)
+        	students[i] = student_list.get(i);			// list to array
+		
+		/*// Create Students
 		Person students[] = new Person[student_no];
 		for (int i = 0; i < student_no; i++) {
 			String stu_id = "" + i;
 			int k1 = (int)(Math.random()*(100+1));  
 			int k2 = (int)(Math.random()*(100+1));  
 			students[i] = new Person(stu_id, "", "", k1+"", k2+"", "", "", "", "");
-		}
-		/* Replacing Ends */
+		}*/
 		
 		
 		// PART I ---------- 
 		// Calculate k1_mean & k2_mean
 		updateMeans(students, student_no);
-		System.out.println("k1_mean = " + k1_mean); // ########## TESTING
-		System.out.println("k2_mean = " + k2_mean); // ########## TESTING
+		//System.out.println("k1_mean = " + k1_mean); // ########## TESTING
+		//System.out.println("k2_mean = " + k2_mean); // ########## TESTING
 		
 		// Create SortingEntity of Person for sorting according to their K1
 		SortingEntity k1SortedStudents[] = new SortingEntity[student_no];
@@ -128,10 +183,6 @@ public class TeamingProcess {
 		// Sort the students using merge sort according to their k1_energies
 		MergeSort.sort(k1SortedStudents, 0, student_no-1, false);
 		
-		System.out.println("Students sorted according to their k1: "); // ########## TESTING 
-		System.out.println("ID, K1, K2");
-		printE(k1SortedStudents); 
-		System.out.println();
 		
 		// Create teams for first student_no/3 students + Add 1st student to Team
 		team_no = student_no / team_size;
@@ -212,7 +263,10 @@ public class TeamingProcess {
 		
 		// Note: Team data are stored in teams[] ; Person data are stored in students[]
 		
-		// ########## The following statements are for testing purpose, should be taken away
+		// Create a dataset for team assignment 
+		writeToCSVFile("./result.csv", teams);
+		
+		/*// ########## The following statements are for testing purpose, should be taken away
 		System.out.println("==================================================");
 		System.out.println("Group Assignment Result: ");
 		for (int x = 0; x < teams.length; x++) {
@@ -221,7 +275,7 @@ public class TeamingProcess {
 			}
 			System.out.print("\t\t k1 average = " + teams[x].getK1() + " ; k2 average = " + teams[x].getK2());
 			System.out.print("\n");
-		}
+		}*/
 		
 	}
 }
