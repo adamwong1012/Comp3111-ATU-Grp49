@@ -6,6 +6,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.io.*;
+import com.opencsv.CSVWriter;
+import com.opencsv.CSVReader;
 
 
 /**
@@ -86,14 +89,58 @@ public class OutputController implements Initializable  {
     /**
      * update Scene
      */
+	
+	/*public static void readFromCSVFile(String filePath, String search)
+	{
+	    try {
+	        FileReader inputfile = new FileReader(filePath);
+	        CSVReader reader = new CSVReader(inputfile);
+	        String[] rowdata;
+	        
+	        // header needs not to be searched
+	        reader.readNext();
+	        // read the csv file to search for matching student_name
+	        while ((rowdata = reader.readNext()) != null) {
+	        	if (rowdata[2].equals(search)) {
+		            for (String datum : rowdata) {
+		                System.out.print(datum + "\t");
+		            }
+		            System.out.println();
+		            break;
+	        	}
+	        }
+	    }
+	    catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}*/
 
     public void setScene(){
-        this.teamNo.setText("1");
-        this.name4.setText(search);
-        this.name2.setText("CHRYSANTHEMUM, Achillobator");
-        this.name1.setText("CHRYSANTHEMUM, Achillobator");
-        this.name3.setText("CHRYSANTHEMUM, Achillobator");
-        this.K1.setText("50");
-        this.K2.setText("50");
+    	try {
+	        FileReader inputfile = new FileReader(filePath);
+	        CSVReader reader = new CSVReader(inputfile);
+	        String[] rowdata;
+	        
+	        // header needs not to be searched
+	        reader.readNext();
+	        // read the csv file to search for matching student_name
+	        while ((rowdata = reader.readNext()) != null) {
+	        	if (rowdata[2].equals(search)) {
+		            for (String datum : rowdata) {
+		                this.teamNo.setText(rowdata[0]);
+		                this.name4.setText(search); // search == rowdata[2] ? 
+		                this.name1.setText(rowdata[3]);
+		                this.name2.setText(rowdata[4]);
+		                this.name3.setText(rowdata[5]);
+		                this.K1.setText(rowdata[6]);
+		                this.K2.setText(rowdata[7]);
+		            }
+		            break;
+	        	}
+	        }
+	    }
+	    catch (Exception e) {
+	        e.printStackTrace();
+	    }
     }
 }
