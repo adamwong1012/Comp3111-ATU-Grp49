@@ -1,7 +1,5 @@
 package com.example.comp3111_project;
 
-import java.io.*;
-
 import com.example.comp3111_project.chartScene.ChartScene;
 import com.example.comp3111_project.teamScene.TeamScene;
 import javafx.application.Application;
@@ -12,7 +10,10 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -20,11 +21,12 @@ import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.*;
+
 public class HelloApplication extends Application {
 
-    static File selectedFile;
 
-    Scene primaryScene;
+    static File selectedFile;
 
     private TableView<Statistics> stat_table = new TableView<Statistics>();
     private TableView<Person> person_table = new TableView<Person>();
@@ -61,9 +63,6 @@ public class HelloApplication extends Application {
                 for(int i=0;i<tempArr.length;i++)
                 {   temptemp = tempArr[1]+tempArr[2];
                     displayName = temptemp.substring(1, temptemp.length() - 1);
-//                 if(temptemp.startsWith(""")){temptemp.replace(""","");
-//                     System.out.println(temptemp);
-//                 }
                     displayEmail = tempArr[3].substring(1, temptemp.length() - 1);
                 }
                 person_data.add(new Person(tempArr[0], displayName, displayEmail, tempArr[4], tempArr[5], tempArr[6],
@@ -84,7 +83,6 @@ public class HelloApplication extends Application {
 
         Group group1 = new Group();
         Scene scene1 = new Scene(group1, 300, 250);
-        primaryScene = scene1;
 
         // Fill in the scene1
 
@@ -209,6 +207,7 @@ public class HelloApplication extends Application {
         person_stage.setScene(scene_person);
         btn2.setOnAction(e ->
                 //stage_stat.setScene(scene_person)
+
                 person_stage.show()
         );
         //group1.getChildren().add(btn2);
@@ -219,10 +218,14 @@ public class HelloApplication extends Application {
         btn3.setText("view general statistics");
         Stage stats_Stage = new Stage();
         btn3.setOnAction(e -> {
-            Platform.runLater(()->{//HelloApplication.read(selectedFile.toString());
+            Platform.runLater(()->{
                 String numOfStudents = String.valueOf(person_data.size());
-                //String K1_Energy_stats = "("+
-                //int test = Integer.valueOf(String.valueOf(person_data.get(0).k1energy));
+
+                /*
+                 * check for the average K1,
+                 * minimum and maximum values of K1
+                 * using for loop to iterate through the list of students
+                 */
                 double K1_AVG = 0;
                 double K1_MIN = Double.parseDouble(person_data.get(0).k1energy.getValue());
                 double K1_MAX = Double.parseDouble(person_data.get(0).k1energy.getValue());
@@ -238,6 +241,11 @@ public class HelloApplication extends Application {
                     };
                 }
 
+                /*
+                 * check for the average K2,
+                 * minimum and maximum values of K2
+                 * using for loop to iterate through the list of students
+                 */
                 double K2_AVG = 0;
                 double K2_MIN = Double.parseDouble(person_data.get(0).k2energy.getValue());
                 double K2_MAX = Double.parseDouble(person_data.get(0).k2energy.getValue());
@@ -255,6 +263,14 @@ public class HelloApplication extends Application {
 
                 K2_AVG = K2_AVG/person_data.size();
 
+                /*
+                 * check for the K3 tick 1 and tick 2
+                 * check the "my preference"
+                 *
+                 * using for loop to iterate through the list of students
+                 * by adding the values for each field, for example, if the result of
+                 * adding all "my preference" is 2, then two students put 1 in their preference
+                 */
 
                 Integer K3_TICK_1 = 0;
                 Integer K3_TICK_2 = 0;
@@ -290,7 +306,7 @@ public class HelloApplication extends Application {
         btn4.setLayoutY(280);
         btn4.setText("Search your own team");
         btn4.setOnAction(e ->
-                //stage_stat.setScene(scene_person)
+                        //stage_stat.setScene(scene_person)
                 {
                     try {
                         Stage stage4= new Stage();
@@ -326,41 +342,22 @@ public class HelloApplication extends Application {
         mainLabel.setFont(new Font("Arial", 18));
         mainLabel.setTextFill(Color.RED);
 
-
-
         Button btn1 = new Button();
         btn1.setLayoutX(100);
         btn1.setLayoutY(138);
         btn1.setText("Choose a file");
         btn1.setOnAction(e -> {
+            /* using file chooser to allow users to choose files from file explorer*/
             FileChooser fileChooser = new FileChooser();
             selectedFile = fileChooser.showOpenDialog(null);
-
-//            Label file_name = new Label(selectedFile.getName());
-//            file_name.setLayoutX(60);
-//            file_name.setLayoutY(105);
-//            file_name.setFont(new Font("Arial", 10));
-//            group1.getChildren().add(file_name);
             btn1.setText(selectedFile.getName());
-
-
-
-//            try {
-//                HelloApplication.read(selectedFile.toString());
-//            } catch (Exception ex) {
-//                throw new RuntimeException(ex);
-//            }
             HelloApplication.read(selectedFile.toString());
-            //System.out.println(selectedFile.toString());
 
-            //stage_stat.setScene(scene_stat);
         });
         Label selectedFileLabel = new Label("File:");
         selectedFileLabel.setLayoutX(50);
         selectedFileLabel.setLayoutY(140);
         selectedFileLabel.setFont(new Font("Arial", 15));
-
-
 
         Label Welcome = new Label("Welcome to ATU!");
         Welcome.setLayoutX(40);
@@ -374,11 +371,13 @@ public class HelloApplication extends Application {
         Input.setFont(new Font("Arial", 15));
         Welcome.setTextFill(Color.ORANGE);
 
-
         Label search = new Label("Search:");
         search.setLayoutX(50);
         search.setLayoutY(280);
         search.setFont(new Font("Arial", 15));
+
+
+
 
 
         group1.getChildren().add(Welcome);
@@ -393,29 +392,15 @@ public class HelloApplication extends Application {
         group1.getChildren().add(search);
 
 
+
         stage_stat.setScene(scene1);
         stage_stat.show();
-
 
     }
 
 
-
-
     public static void main(String[] args) throws Exception {
 
-//        String csvFile;
-//
-//
-//       // String csvFile = selectedFile.toString();                 ; //"C:\\Users\\85292\\Downloads\\Sample Student Data File (1).CSV"; //
-//        try {
-//            csvFile = selectedFile.toString();
-//        } catch (Exception e) {
-//            //throw new RuntimeException(e);
-//            System.out.println("its wrong");
-//        }
-//        HelloApplication.read(csvFile);
-//        //System.out.println("Hello");
         launch(args);
 
     }
@@ -425,7 +410,7 @@ public class HelloApplication extends Application {
         private final SimpleStringProperty entry;
         private final SimpleStringProperty value;
 
-        private Statistics(String fName, String lName) {
+        public Statistics(String fName, String lName) {
             this.entry = new SimpleStringProperty(fName);
             this.value = new SimpleStringProperty(lName);
         }
@@ -551,7 +536,6 @@ public class HelloApplication extends Application {
         }
 
     }
-
     public static ObservableList<Person> getPerson_data() {
         return person_data;
     }
