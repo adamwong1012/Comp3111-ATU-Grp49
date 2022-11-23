@@ -160,6 +160,7 @@ public class TeamingProcess {
 		// PART I ---------- 
 		// Calculate k1_mean & k2_mean
 		updateMeans(students, student_no);
+		System.out.println("Overall Statistics: ");
 		System.out.println("k1_mean = " + k1_mean); // ########## TESTING
 		System.out.println("k2_mean = " + k2_mean); // ########## TESTING
 		
@@ -174,7 +175,8 @@ public class TeamingProcess {
 		
 		// Sort the students using merge sort according to their k1_energies
 		MergeSort.sort(k1SortedStudents, 0, student_no-1, false);
-		
+
+		System.out.println("==================================================");
 		System.out.println("Students sorted according to their k1: "); // ########## TESTING 
 		System.out.println("ID, K1, K2");
 		printE(k1SortedStudents); 
@@ -262,7 +264,9 @@ public class TeamingProcess {
 		// ########## The following statements are for testing purpose, should be taken away
 		System.out.println("==================================================");
 		System.out.println("Group Assignment Result: ");
+		System.out.println("Team ID" + "\t" + "Grp Mate 1" + "\t" + "Grp Mate 2" + "\t" + "Grp Mate 3" + "\t" + "Grp Mate 4 (if any)");
 		for (int x = 0; x < teams.length; x++) {
+			System.out.println(teams[x].getID() + "\t");
 			for (int y = 0; y < teams[x].getPersonNo(); y++) {
 				System.out.print(teams[x].getPersonAt(y).getStudentid() + "\t");
 			}
