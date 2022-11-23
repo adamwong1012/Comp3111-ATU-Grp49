@@ -325,6 +325,7 @@ public class HelloApplication extends Application {
                     else {
                         try {
                             Stage stage4= new Stage();
+                            stage4.setTitle("ATU System");
                             stage4.setScene(new TeamScene());
                             stage4.show();
                         } catch (IOException ex) {
@@ -351,6 +352,7 @@ public class HelloApplication extends Application {
                     else {
                         try {
                             Stage stage5= new Stage();
+                            stage5.setTitle("ATU System");
                             ChartScene chartScene = new ChartScene();
                             stage5.setScene(chartScene);
                             stage5.show();
