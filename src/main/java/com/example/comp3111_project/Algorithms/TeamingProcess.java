@@ -3,6 +3,9 @@
  */
 package com.example.comp3111_project.Algorithms;
 
+import com.example.comp3111_project.HelloApplication;
+import javafx.collections.ObservableList;
+
 import java.lang.Math;   // ########## Should be taken away
 
 //@SuppressWarnings("unused")
@@ -14,6 +17,8 @@ public class TeamingProcess {
 	private static int remaining_student_no;
 	public static double k1_mean;
 	public static double k2_mean;
+
+	private Team[] teams;
 	
 	
 	// Can be taken away if not necessary
@@ -97,16 +102,17 @@ public class TeamingProcess {
 	// NOTES: 1. Array is passed by value in java
 	//		  2. Array is copied by reference in java
 	//        3. Object is copied by reference in java
-	public static void main(String args[]) {
+	public TeamingProcess(ObservableList<HelloApplication.Person> args) {
 		/******* The following few lines of code will be replaced */
 		// Create Students
-		Person students[] = new Person[student_no];
-		for (int i = 0; i < student_no; i++) {
-			String stu_id = "" + i;
-			int k1 = (int)(Math.random()*(100+1));  
-			int k2 = (int)(Math.random()*(100+1));  
-			students[i] = new Person(stu_id, "", "", k1+"", k2+"", "", "", "", "");
+		Person students[] = new Person[args.size()];
+		int count = 0;
+		for (HelloApplication.Person person: args) {
+			students[count] = new Person(person.getStudentid(),person.getStudentname(),person.getStudentemail(),person.getK1energy(),person.getK2energy(),person.getK3trick1(),person.getK3trick2(),person.getMypreference(),person.getConcerns());
+			count++;
 		}
+		student_no = args.size();
+
 		/* Replacing Ends */
 		
 		
@@ -135,7 +141,7 @@ public class TeamingProcess {
 		
 		// Create teams for first student_no/3 students + Add 1st student to Team
 		team_no = student_no / team_size;
-		Team teams[] = new Team[team_no];
+		teams = new Team[team_no];
 		for (int i = 0; i < team_no; i++) {
 			teams[i] = new Team(i+1, k1SortedStudents[i].getPerson());
 			k1SortedStudents[i].setIndex(-1);
@@ -222,6 +228,11 @@ public class TeamingProcess {
 			System.out.print("\t\t k1 average = " + teams[x].getK1() + " ; k2 average = " + teams[x].getK2());
 			System.out.print("\n");
 		}
+
 		
 	}
+	public  Team[] getTeamArray() {
+		return teams;
+	}
+
 }

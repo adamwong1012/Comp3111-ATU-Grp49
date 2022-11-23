@@ -1,4 +1,5 @@
 package com.example.comp3111_project.teamScene;
+import com.example.comp3111_project.HelloApplication;
 import com.example.comp3111_project.outputScene.OutputHelper;
 import com.example.comp3111_project.outputScene.OutputScene;
 import javafx.scene.control.Alert;
@@ -48,14 +49,13 @@ public class TextFieldController   {
         this.setInputResult(inputField.getCharacters().toString());
         Stage outputStage = new Stage();
         outputStage.setTitle("ATU System");
-        OutputScene outputScene = new OutputScene();
-        OutputHelper outputHelper = new OutputHelper();
+        OutputHelper outputHelper = new OutputHelper(HelloApplication.getTeam());
         int result = outputHelper.checkForValidInput(inputResult);
         if ( result == -1) {
             Alert alertMessage = new Alert(Alert.AlertType.NONE);
             alertMessage.setAlertType(Alert.AlertType.ERROR);
             alertMessage.setTitle("Invalid Input");
-            alertMessage.setContentText("Please provide valid input.");
+            alertMessage.setContentText("Please provide valid input. [<Family Name> <First Name>]");
             alertMessage.show();
         } else if (result == 0) {
             Alert alertMessage = new Alert(Alert.AlertType.NONE);
@@ -64,6 +64,8 @@ public class TextFieldController   {
             alertMessage.setContentText("There is no existing record.");
             alertMessage.show();
         } else {
+            OutputScene outputScene = new OutputScene();
+            outputScene.getController().setScene(outputHelper.getNameList(),outputHelper.getTeamId(),outputHelper.getK1Average(),outputHelper.getK2Average(),outputHelper.getFoundNameResult(),outputHelper.getFoundIDResult());
             outputStage.setScene(outputScene);
             outputStage.show();
         }

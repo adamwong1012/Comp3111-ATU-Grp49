@@ -1,5 +1,7 @@
 package com.example.comp3111_project;
 
+import com.example.comp3111_project.Algorithms.Team;
+import com.example.comp3111_project.Algorithms.TeamingProcess;
 import com.example.comp3111_project.chartScene.ChartScene;
 import com.example.comp3111_project.teamScene.TeamScene;
 import javafx.application.Application;
@@ -10,10 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -31,6 +30,8 @@ public class HelloApplication extends Application {
     private TableView<Statistics> stat_table = new TableView<Statistics>();
     private TableView<Person> person_table = new TableView<Person>();
 
+    private static Team[] team ;
+
     //    private final ObservableList<Statistics> stat_data = FXCollections.observableArrayList(
 //            new Statistics("Total Number of Students", "100"),
 //            new Statistics("K1_Energy(Average, Min, Max)", "(59.8, 10, 80)"),
@@ -45,7 +46,7 @@ public class HelloApplication extends Application {
 
     //public final String K1_AVG = null;
 
-    public static void read(String csvFile) {
+    public  static void read(String csvFile) {
 
         System.out.print("\n");
         try {
@@ -68,10 +69,16 @@ public class HelloApplication extends Application {
                 person_data.add(new Person(tempArr[0], displayName, displayEmail, tempArr[4], tempArr[5], tempArr[6],
                         tempArr[7], tempArr[8], tempArr[9]));
             }
+            var hello = new TeamingProcess(person_data);
+            team = hello.getTeamArray();
             br.close();
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
+    }
+
+    public static Team[] getTeam(){
+        return team;
     }
 
 
@@ -308,12 +315,21 @@ public class HelloApplication extends Application {
         btn4.setOnAction(e ->
                         //stage_stat.setScene(scene_person)
                 {
-                    try {
-                        Stage stage4= new Stage();
-                        stage4.setScene(new TeamScene());
-                        stage4.show();
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
+                    if (person_data.isEmpty()){
+                        Alert alertMessage = new Alert(Alert.AlertType.NONE);
+                        alertMessage.setAlertType(Alert.AlertType.ERROR);
+                        alertMessage.setTitle("Not Found");
+                        alertMessage.setContentText("Please drag the csv file into the system.");
+                        alertMessage.show();
+                    }
+                    else {
+                        try {
+                            Stage stage4= new Stage();
+                            stage4.setScene(new TeamScene());
+                            stage4.show();
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
                     }
                 }
         );
@@ -325,13 +341,22 @@ public class HelloApplication extends Application {
         btn5.setOnAction(e ->
                         //stage_stat.setScene(scene_person)
                 {
-                    try {
-                        Stage stage5= new Stage();
-                        ChartScene chartScene = new ChartScene();
-                        stage5.setScene(chartScene);
-                        stage5.show();
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
+                    if (person_data.isEmpty()){
+                        Alert alertMessage = new Alert(Alert.AlertType.NONE);
+                        alertMessage.setAlertType(Alert.AlertType.ERROR);
+                        alertMessage.setTitle("Not Found");
+                        alertMessage.setContentText("Please drag the csv file into the system.");
+                        alertMessage.show();
+                    }
+                    else {
+                        try {
+                            Stage stage5= new Stage();
+                            ChartScene chartScene = new ChartScene();
+                            stage5.setScene(chartScene);
+                            stage5.show();
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
                     }
                 }
         );

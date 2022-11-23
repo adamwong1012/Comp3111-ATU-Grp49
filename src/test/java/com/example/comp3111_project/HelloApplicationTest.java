@@ -1,4 +1,6 @@
 package com.example.comp3111_project;
+import com.example.comp3111_project.Algorithms.Person;
+import com.example.comp3111_project.Algorithms.Team;
 import com.example.comp3111_project.outputScene.OutputHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +14,17 @@ class HelloApplicationTest {
 
     @BeforeEach
     void definePerson() {
-        outputHelper = new OutputHelper();
+
+        Team team = new Team(0,new Person("20001122",
+                "Peter Parker",    "peterparker@connect.ust.hk",
+                "28","55","0","0","1",
+                "I want to work alone"));
+        Team team2 = new Team(0,new Person("20001123",
+                "Spider Man",    "spiderman@connect.ust.hk",
+                "28","55","0","0","1",
+                "I want to work alone"));
+        Team[] teams = {team,team2};
+        outputHelper = new OutputHelper(teams);
         test = new HelloApplication.Person("20001122",
                 "Peter Parker",    "peterparker@connect.ust.hk",
                 "28","55","0","0","1",
@@ -91,7 +103,7 @@ class HelloApplicationTest {
 
     @Test
     public void checkGetInputResult() {
-        assertEquals(1, outputHelper.checkForValidInput("Sam, Wong"));
+        assertEquals(0, outputHelper.checkForValidInput("Sam Wong"));
         assertEquals(-1, outputHelper.checkForValidInput("Sam121Wong"));
         assertEquals(-1, outputHelper.checkForValidInput("154546"));
         assertEquals(0, outputHelper.checkForValidInput("12345678"));
@@ -99,8 +111,24 @@ class HelloApplicationTest {
 
     @Test
     public void checkFormat() {
-        assertEquals(1, outputHelper.checkForFormat("Sam, Wong"));
+        assertEquals(1, outputHelper.checkForFormat("Sam Wong"));
+        assertEquals(-1, outputHelper.checkForFormat("Sam, Wong"));
         assertEquals(-1, outputHelper.checkForValidInput(",..Sam, Wong"));
+    }
+
+    @Test
+    public void checkExistingIDRecord() {
+        assertEquals(1, outputHelper.checkForExistingStudentID("20001122"));
+        assertEquals(1, outputHelper.checkForExistingStudentID("20001123"));
+        assertEquals(0, outputHelper.checkForExistingStudentID("20001126"));
+        assertEquals(0, outputHelper.checkForExistingStudentID("20001125"));
+    }
+
+    @Test
+    public void checkExistingNameRecord() {
+        assertEquals(1, outputHelper.checkForExistingStudentName("Peter Parker"));
+        assertEquals(1, outputHelper.checkForExistingStudentName("Spider Man"));
+        assertEquals(0, outputHelper.checkForExistingStudentName("Iron Man"));
     }
 
 //    @SuppressWarnings("unused")

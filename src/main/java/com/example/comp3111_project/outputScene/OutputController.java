@@ -72,28 +72,25 @@ public class OutputController implements Initializable  {
         this.search_id.setText("-----");
     }
 
-    /**
-     * set textFieldInputResult
-     * @param result inputFieldResult
-     */
 
-    public void setSearch(String result) {
-
-        search = result;
-        //setScene();
-    }
 
     /**
      * update Scene
      */
 
-    public void setScene(){
-        this.teamNo.setText("1");
-        this.name4.setText(search);
-        this.name2.setText("CHRYSANTHEMUM, Achillobator");
-        this.name1.setText("CHRYSANTHEMUM, Achillobator");
-        this.name3.setText("CHRYSANTHEMUM, Achillobator");
-        this.K1.setText("50");
-        this.K2.setText("50");
+    public void setScene(List<String> nameList,String teamId,String k1avg,String k2avg,String sName,String sID){
+        this.teamNo.setText(teamId);
+        this.search_id.setText(sID);
+        this.search_name.setText(sName);
+        for (int i=0; i<nameList.size(); i++){
+            switch (i){
+                case 0: name1.setText(nameList.get(0));break;
+                case 1: name2.setText(nameList.get(1));break;
+                case 2: name3.setText(nameList.get(2));break;
+                case 3: name4.setText(nameList.get(3));break;
+            }
+        }
+        this.K1.setText(k1avg);
+        this.K2.setText(k2avg);
     }
 }

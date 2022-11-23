@@ -38,5 +38,9 @@ public class Team {
 		}
 		return students[idx];
 	}
+
+	public Person[] getStudentList() {
+		return this.students;
+	}
 	
 }
