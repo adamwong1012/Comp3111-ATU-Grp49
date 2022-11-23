@@ -21,7 +21,12 @@ public class TeamingProcess {
 	private Team[] teams;
 	
 	
-	// Can be taken away if not necessary
+	/**
+	 * updateMeans(..) method calculates the k1 mean and k2 mean of all students
+	 * @param students[] an array of Person for students, students[]
+	 * @param n an integer indicating the number of students
+	 * @return none
+	 */
 	public static void updateMeans(Person students[], int n) {
 		int k1_sum = 0;
 		int k2_sum = 0;
@@ -35,6 +40,13 @@ public class TeamingProcess {
 		k2_mean = k2_sum / n;
 	}
 	
+	/**
+	 * totalMeanDeviation(..) method calculates the deviation of a team from the global mean
+	 * after adding the student into the team
+	 * @param a Team object, team
+	 * @param a Person object, students
+	 * @return the sum of the deviation of k1 and k2 energies
+	 */
 	public static double totalMeanDeviation(Team team, Person student) {
 		double new_team_k1_avg = (team.getK1() * team.getPersonNo() + Integer.parseInt(student.getK1energy())) / (team.getPersonNo()+1);
 		double new_team_k2_avg = (team.getK2() * team.getPersonNo() + Integer.parseInt(student.getK2energy())) / (team.getPersonNo()+1);
@@ -51,6 +63,13 @@ public class TeamingProcess {
 	}
 	
 	
+	/**
+	 * sortTeamPreferenceList(..) method generates a preference list of students for a team
+	 * @param a Team object, team
+	 * @param an array of SortingEntity objects, subject[], storing information of students
+	 * @param an integer indicating the number of students
+	 * @return none
+	 */
 	// subject means the variable being sorted in the preference list
 	public static void sortTeamPreferenceList(Team team, SortingEntity subject[], int n) {
 		for (int i = 0; i < n; i++) {
@@ -60,6 +79,13 @@ public class TeamingProcess {
 		MergeSort.sort(subject, 0, n-1, true);
 	}
 	
+	/**
+	 * sortStudentPreferenceList(..) method generates a preference list of teams for a student
+	 * @param a Person object, student
+	 * @param an array of SortingEntity objects, subject[], storing information of teams
+	 * @param an integer indicating the number of teams
+	 * @return none
+	 */
 	public static void sortStudentPreferenceList(Person student, SortingEntity subject[], int n) {
 		for (int i = 0; i < n; i++) {
 			subject[i].setPerson(student);
@@ -68,6 +94,16 @@ public class TeamingProcess {
 		MergeSort.sort(subject, 0, n-1, true);
 	}
 	
+	/**
+	 * form2dPreferenceList(..) method generates a 2d preference using sortTeamPreferenceList(..)
+	 * and sortStudentPreferenceList(..)
+	 * @param a 2d SortingEntity object array, preferenceLists[][], storing the preferences for
+	 *        teams or students for each student and team respectively
+	 * @param an arrry of Team objects, teams[], storing information of students
+	 * @param an array of SortingEntity objects, subject[], storing information of teams
+	 * @param an integer defining the dimension of preferenceLists, longestListLength
+	 * @return none
+	 */
 	public static void form2dPreferenceList(SortingEntity preferenceLists[][], Team teams[], SortingEntity students[], 
 										int longestListLength) {
 		// Note: pL[0..team_no-1][] is for Team's preference lists
@@ -88,6 +124,11 @@ public class TeamingProcess {
 	}
 	
 	
+	/**
+	 * printE(..) method print the student id, k1 energy and k2 energy
+	 * @param a sortingEntity array entity[]
+	 * @return none
+	 */
 	public static void printE(SortingEntity entity[]) {
 		for (int i = 0; i < entity.length; i++) {
 			if (entity[i] != null) {
@@ -119,6 +160,7 @@ public class TeamingProcess {
 		// PART I ---------- 
 		// Calculate k1_mean & k2_mean
 		updateMeans(students, student_no);
+		System.out.println("Overall Statistics: ");
 		System.out.println("k1_mean = " + k1_mean); // ########## TESTING
 		System.out.println("k2_mean = " + k2_mean); // ########## TESTING
 		
@@ -133,7 +175,8 @@ public class TeamingProcess {
 		
 		// Sort the students using merge sort according to their k1_energies
 		MergeSort.sort(k1SortedStudents, 0, student_no-1, false);
-		
+
+		System.out.println("==================================================");
 		System.out.println("Students sorted according to their k1: "); // ########## TESTING 
 		System.out.println("ID, K1, K2");
 		printE(k1SortedStudents); 
@@ -221,7 +264,9 @@ public class TeamingProcess {
 		// ########## The following statements are for testing purpose, should be taken away
 		System.out.println("==================================================");
 		System.out.println("Group Assignment Result: ");
+		System.out.println("Team ID" + "\t" + "Grp Mate 1" + "\t" + "Grp Mate 2" + "\t" + "Grp Mate 3" + "\t" + "Grp Mate 4 (if any)");
 		for (int x = 0; x < teams.length; x++) {
+			System.out.println(teams[x].getID() + "\t");
 			for (int y = 0; y < teams[x].getPersonNo(); y++) {
 				System.out.print(teams[x].getPersonAt(y).getStudentid() + "\t");
 			}

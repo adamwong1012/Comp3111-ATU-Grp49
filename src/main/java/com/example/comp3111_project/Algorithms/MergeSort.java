@@ -66,6 +66,15 @@ public class MergeSort {
         }
     }
  
+    /**
+	 * sort(..) method sorts SortingEntity array in ascending or descending order
+	 * of the value of the attribute {@code data} in each element
+	 * @param a SortingEntity array, arr[]
+	 * @param an integer for the smallest index, l
+	 * @param an integer for the largest index, r
+	 * @param a boolean for specifying how {@code arr} is sorted, ascending 
+	 * @return none
+	 */
     // MAIN FUNCTION: CAN BE CALLED --> public
     /* DO: sort arr[l..r] */
     public static void sort(SortingEntity arr[], int l, int r, boolean ascending)

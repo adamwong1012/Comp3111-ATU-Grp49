@@ -32,6 +32,15 @@ public class GSAlgorithm {
 		    return false;
 		} 
 		  
+		/**
+		 * GS_Matching(..) method gives an optimal matching according to
+		 * the preference lists by using Gale Shapley Algorithm
+		 * @param a SortingEntity array, prefer[]
+		 * @param a Team array, teams[], for team assignment of students
+		 * @param a SortingEntity array, student_entity[], for indicating 
+		 *        which students are assigned to teams
+		 * @return none
+		 */
 		// Function for optimal matching: teams, prefer[0..M][] ; students, prefer[N..2N-1][]
 		public static void GS_Matching(SortingEntity prefer[][], Team teams[], SortingEntity student_entity[]) 
 		{ 
